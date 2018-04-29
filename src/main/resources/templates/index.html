@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <!--<meta charset="utf-8">-->
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
@@ -12,16 +11,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <style>
-        body {
-            padding-top: 50px;
-        }
+    <link type="text/css" th:href="@{/CSS/sytles.css}"  rel="stylesheet" media="screen"/>
 
-        .starter-template {
-            padding: 40px 15px;
-            text-align: center;
-        }
-    </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -66,7 +57,7 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
 </body>
 </html>
