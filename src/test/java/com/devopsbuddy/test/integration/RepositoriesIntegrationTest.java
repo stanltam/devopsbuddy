@@ -8,6 +8,9 @@ import com.devopsbuddy.backend.persistance.domain.backend.UserRole;
 import com.devopsbuddy.backend.persistance.repositories.PlanRepository;
 import com.devopsbuddy.backend.persistance.repositories.RoleRepository;
 import com.devopsbuddy.backend.persistance.repositories.UserRepository;
+import com.devopsbuddy.enums.PlansEnum;
+import com.devopsbuddy.enums.RolesEnum;
+import com.devopsbuddy.utils.UsersUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,10 +47,18 @@ public class RepositoriesIntegrationTest {
 
     @Test
     public void testCreateNewPlan() throws Exception {
-        Plan basicPlan = createBasicPlan();
+        Plan basicPlan = createPlan(PlansEnum.PRO);
         planRepository.save(basicPlan);
-        Optional<Plan>  retrievedPlan = planRepository.findById(1);
+        Optional<Plan>  retrievedPlan = planRepository.findById(PlansEnum.PRO.getId());
         Assert.assertNotNull(retrievedPlan);
+    }
+
+    @Test
+    public void testCreateNewRole() throws Exception {
+        Role basicRole = createRole(RolesEnum.BASIC);
+        roleRepository.save(basicRole);
+        Optional<Role>  retrievedRole = roleRepository.findById(RolesEnum.BASIC.getId());
+        Assert.assertNotNull(retrievedRole);
     }
 
 
@@ -55,13 +66,13 @@ public class RepositoriesIntegrationTest {
     @Test
     public void createNewUser() throws Exception {
 
-        Plan basicPlan = createBasicPlan();
+        Plan basicPlan = createPlan(PlansEnum.PRO);
         planRepository.save(basicPlan);
 
-        User basicUser = createBasicUser();
+        User basicUser = UsersUtils.createBasicUser();
         basicUser.setPlan(basicPlan);
 
-        Role basicRole = createBasicRole();
+        Role basicRole = createRole(RolesEnum.BASIC);
         Set<UserRole> userRoles = new HashSet<>();
         UserRole userRole = new UserRole(basicUser, basicRole);
         userRoles.add(userRole);
@@ -88,18 +99,12 @@ public class RepositoriesIntegrationTest {
     }
 
 
-    private Plan createBasicPlan(){
-        Plan plan = new Plan();
-        plan.setId(1);
-        plan.setName("Basic");
-        return plan;
+    private Plan createPlan(PlansEnum plansEnum){
+        return new Plan(plansEnum);
     }
 
-    private Role createBasicRole(){
-        Role role = new Role();
-        role.setId(1);
-        role.setName("ROLE_USER");
-        return role;
+    private Role createRole(RolesEnum rolesEnum){
+        return new Role(rolesEnum);
     }
 
     private User createBasicUser(){
