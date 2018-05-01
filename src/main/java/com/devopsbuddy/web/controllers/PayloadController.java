@@ -8,7 +8,7 @@ public class PayloadController {
 
     private static final String PAYLOAD_VIEW_NAME = "payload/payload";
 
-    @RequestMapping("/payloadg")
+    @RequestMapping("/payload")
     public String payload(){
         return PayloadController.PAYLOAD_VIEW_NAME;
     }
