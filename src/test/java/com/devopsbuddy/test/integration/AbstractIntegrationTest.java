@@ -1,18 +1,19 @@
 package com.devopsbuddy.test.integration;
 
-import com.devopsbuddy.backend.persistance.domain.backend.Plan;
-import com.devopsbuddy.backend.persistance.domain.backend.Role;
-import com.devopsbuddy.backend.persistance.domain.backend.User;
-import com.devopsbuddy.backend.persistance.domain.backend.UserRole;
+import com.devopsbuddy.backend.persistance.domain.backend.*;
+import com.devopsbuddy.backend.persistance.repositories.PasswordResetTokenRepository;
 import com.devopsbuddy.backend.persistance.repositories.PlanRepository;
 import com.devopsbuddy.backend.persistance.repositories.RoleRepository;
 import com.devopsbuddy.backend.persistance.repositories.UserRepository;
 import com.devopsbuddy.enums.PlansEnum;
 import com.devopsbuddy.enums.RolesEnum;
 import com.devopsbuddy.utils.UserUtils;
+import org.junit.Assert;
 import org.junit.rules.TestName;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +27,13 @@ public abstract class AbstractIntegrationTest {
 
     @Autowired
     protected UserRepository userRepository;
+
+    @Autowired
+    private PasswordResetTokenRepository passwordResetTokenRepository;
+
+    @Value("${token.expiration.length.minutes}")
+    private int expirationTimeInMinutes;
+
 
     protected Plan createPlan(PlansEnum plansEnum){
         return new Plan(plansEnum);
@@ -56,6 +64,16 @@ public abstract class AbstractIntegrationTest {
 
     protected User createUser(TestName testName) {
         return createUser(testName.getMethodName(),testName+"@gmail.com");
+    }
+
+    private PasswordResetToken createPasswordResetToken(String token, User user, LocalDateTime now) {
+
+
+        PasswordResetToken passwordResetToken = new PasswordResetToken(token, user, now, expirationTimeInMinutes);
+        passwordResetTokenRepository.save(passwordResetToken);
+        Assert.assertNotNull(passwordResetToken.getId());
+        return passwordResetToken;
+
     }
 
 
