@@ -8,6 +8,7 @@ import com.devopsbuddy.backend.persistance.repositories.RoleRepository;
 import com.devopsbuddy.backend.persistance.repositories.UserRepository;
 import com.devopsbuddy.enums.PlansEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +28,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Transactional
     public User createUser(User user, PlansEnum plansEnum, Set<UserRole> userRoles) {
 
-
+        String encryptPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encryptPassword);
         Plan plan = new Plan(plansEnum);
         // It makes sure the plans exist in the database
         if (!planRepository.existsById(plansEnum.getId())) {
