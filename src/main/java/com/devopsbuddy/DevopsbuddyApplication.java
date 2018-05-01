@@ -6,22 +6,21 @@ import com.devopsbuddy.backend.persistance.domain.backend.UserRole;
 import com.devopsbuddy.backend.service.UserService;
 import com.devopsbuddy.enums.PlansEnum;
 import com.devopsbuddy.enums.RolesEnum;
-import com.devopsbuddy.utils.UsersUtils;
+import com.devopsbuddy.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @SpringBootApplication
 public class DevopsbuddyApplication implements CommandLineRunner {
-    
-    /*** The application logger*/
+
+    /** The application logger */
     private static final Logger LOG = LoggerFactory.getLogger(DevopsbuddyApplication.class);
 
     @Autowired
@@ -33,12 +32,18 @@ public class DevopsbuddyApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User user = UsersUtils.createBasicUser();
+        User user = UserUtils.createBasicUser();
         Set<UserRole> userRoles = new HashSet<>();
-        userRoles.add(new UserRole(user, new Role(RolesEnum.BASIC)));
+        userRoles.add(new UserRole(user, new Role(RolesEnum.PRO)));
         LOG.debug("Creating user with username {}", user.getUsername());
+
+        for (UserRole ur : userRoles) {
+            LOG.debug("Check role details {}", ur.getUser().getUsername());
+            LOG.debug("Check role details {}", ur.getRole().getName());
+
+
+        }
         userService.createUser(user, PlansEnum.PRO, userRoles);
         LOG.info("User {} created", user.getUsername());
     }
-
 }
