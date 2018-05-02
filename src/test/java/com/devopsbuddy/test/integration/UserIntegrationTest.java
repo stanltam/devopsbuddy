@@ -70,7 +70,7 @@ public class UserIntegrationTest extends  AbstractIntegrationTest{
 
     @Test
     public void createNewUser() throws Exception {
-        User basicUser = createUser(testName.getMethodName(),testName.getMethodName()+"@gmail.com");
+        User basicUser = createUser(testName.getMethodName()+"2",testName.getMethodName()+"@gmail.com");
         Optional<User> newlyCreatedUser = userRepository.findById(basicUser.getId());
 
         Assert.assertNotNull(newlyCreatedUser);
