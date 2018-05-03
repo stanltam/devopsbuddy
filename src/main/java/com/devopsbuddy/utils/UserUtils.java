@@ -34,7 +34,7 @@ public class UserUtils {
         user.setCountry("GB");
         user.setEnabled(true);
         user.setDescription("A basic user");
-        user.setProfileImageUrl("https://blabla.images.com/basicuser");
+        user.setProfileImageUrl("https://stanleytam-devopsbuddy.s3.amazonaws.com/stanltam/profilePicture.png");
 
         return user;
     }

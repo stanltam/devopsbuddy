@@ -108,6 +108,22 @@
         </dependency>
 
 
+        <!--AWS dependencies-->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+
+
+        <!--Commons dependencies-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
